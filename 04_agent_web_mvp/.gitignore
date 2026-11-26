@@ -1,0 +1,12 @@
+# 절대 GitHub에 커밋하지 않을 자료
+.env
+.env.*
+*.pem
+*.key
+id_ed25519*
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+hf-cache/
+models/
+runs/

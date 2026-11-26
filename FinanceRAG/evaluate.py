@@ -26,8 +26,6 @@ def run_test(case, config):
         row['status_code'] = res.status_code
         res.raise_for_status()
         data = res.json()
-        if not isinstance(data, dict):
-            raise ValueError('Expected JSON object')
         actual = data
         for key in config['tool_field'].split('.'):
             actual = actual.get(key) if isinstance(actual, dict) else None
@@ -36,7 +34,7 @@ def run_test(case, config):
         if success_field and success_field not in data:
             row['issue'] = 'Missing success field: ' + success_field
         else:
-            row['success'] = (not success_field or data.get(success_field) is True) and actual == case['expected_tool']
+            row['success'] = (not success_field or data.get(success_field) == config.get('success_value', True)) and actual == case['expected_tool']
             if not row['success']:
                 row['issue'] = f"Tool mismatch or API failure: expected={case['expected_tool']}, actual={actual}"
     except requests.RequestException as exc:
@@ -89,8 +87,6 @@ def run(stage, root=ROOT):
         else:
             print('No failed tests. Do not fabricate a failure; add genuine edge cases.')
         return rows
-    if stage != 'after':
-        raise ValueError('Unknown stage: ' + stage)
     if not (output / 'before.csv').exists() or not (output / 'selected_case.json').exists():
         raise SystemExit('No saved failed test. Run before first.')
     selection = json.loads((output / 'selected_case.json').read_text(encoding='utf-8'))

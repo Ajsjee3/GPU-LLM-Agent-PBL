@@ -1,0 +1,7 @@
+﻿test_type,query,expected_tool,success,status_code,tool_name,elapsed_ms,issue
+계산,33명이 30시간씩 GPU를 사용하면 총 몇 GPU-hour야?,calculator,True,200,calculator,26913.3,
+글자 수,'AI Agent'의 글자 수를 계산해줘.,text_length,True,200,text_length,654.6,
+현재 시간,지금 한국 날짜와 시간은?,current_time,False,200,,307.1,"{'status': 'error', 'used_tool': False, 'tool_..."
+데이터 분석,"[10,20,30]의 합계와 평균을 알려줘.",data_summary,True,200,data_summary,1109.6,
+일반 설명,AI Agent가 무엇인지 한 문장으로 설명해줘.,,True,200,,583.5,
+빈 입력,,,True,422,,,

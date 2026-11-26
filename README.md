@@ -1,36 +1,20 @@
 # GPU 기반 오픈소스 LLM·AI Agent 서비스 개발 PBL
 
-GPU 환경에서 오픈소스 LLM을 실습하고, RAG·LoRA·AI Agent·FastAPI를 활용한 서비스 개발 과정을 기록하는 개인 학습 저장소입니다.
+RunPod에서 Qwen과 Gemma를 같은 질문으로 비교하고, Qwen이 계산·글자 수·현재 시각·기초 통계 도구를 선택하는 과정을 FastAPI와 웹 화면까지 연결했습니다. 별도 응용인 **FinanceRAG**에서는 삼성전자 실적 발표를 검색하고 답변의 근거를 확인할 수 있습니다.
 
-> 개발 진행 중 (In Progress). 취업 포트폴리오와 별도로 관리합니다.
+## 어디서 시작할까요?
 
-## 학습 과정
+| 보고 싶은 내용 | 코드와 기록 |
+|---|---|
+| 모델 실행부터 도구 호출까지 따라가기 | [01~05 실습 노트북](notebooks/README.md) |
+| FastAPI 요청과 응답 살펴보기 | [04 Agent 백엔드](04_agent_web_mvp/) |
+| 브라우저에서 도구 선택 실험하기 | [05 Agent Web MVP](05_agent_web_mvp/) |
+| 실제 기업 재무 자료로 질문하기 | [FinanceRAG 실행 방법](FinanceRAG/README.md) · [삼성전자 자료 출처](FinanceRAG/data/README.md) |
 
-| 회차 | 주제 | 기록 상태 |
-|---|---|---|
-| 01 | GPU 환경 및 모델 기초 | 정리 예정 |
-| 02 | Transformer | 정리 예정 |
-| 03 | 오픈소스 LLM 추론 | 정리 예정 |
-| 04 | 모델 성능 평가 | 정리 예정 |
-| 05 | 프롬프트 평가 | 정리 예정 |
-| 06 | RAG | 정리 예정 |
-| 07 | LoRA | 정리 예정 |
-| 08 | AI Agent | 정리 예정 |
-| 09 | FastAPI | 정리 예정 |
-| 10 | Web MVP 및 평가 | 정리 예정 |
+## 실습에서 확인한 점
 
-## 개인 프로젝트 — FinanceRAG
+- **모델 비교** — 저장한 질문 5개씩의 평가에서 Qwen3-8B와 Gemma-3-4B-IT의 지시 준수율은 각각 80%였습니다. 평균 생성 속도는 각각 30.48, 19.31 tokens/s였고 평균 최대 GPU 메모리는 15.28, 8.04 GB였습니다. 질문별 응답과 집계값을 함께 보관했습니다. [개별 응답](results/02_model_evaluation_results.csv) · [집계](results/02_model_selection_summary.csv)
+- **도구 선택** — 03 실습과 05 웹 평가에서 모두 현재 시각 질문을 처리하지 못했습니다. 05에서는 서버가 HTTP 200을 반환했지만 선택한 도구가 비어 있었습니다. 계산, 글자 수, 통계, 일반 설명, 빈 입력 검증은 기대 동작과 일치했습니다. 빈 입력의 기대 응답은 422입니다. [03 실행 기록](results/03_agent_tool_execution_log.csv) · [05 평가표](results/05_mvp_evaluation.csv)
+- **금융 자료 검색** — 삼성전자 2024년 2·3분기 자료에 출처와 발표일을 연결했습니다. CPU에서는 발췌 검색을 실행할 수 있고 강의 GPU에서는 하이브리드 검색 결과를 LLM에 전달합니다. 기본 모델과 LoRA의 답변 비교는 GPU 노트북에서 실행합니다. [재무 분석 노트북](FinanceRAG/app/FinanceRAG.ipynb)
 
-실제 기업 공시 문서에 기반한 재무 질의응답 및 분석 서비스 개발을 목표로 합니다. 금융 데이터 검색, 근거 표시, 계산 도구, 응답 시간 측정을 단계적으로 연동할 계획입니다.
-
-- [학습 기록](notebooks/README.md)
-- [FinanceRAG 개발 및 실행 가이드](FinanceRAG/README.md)
-- [오류 수정 기록](FinanceRAG/docs/troubleshooting.md)
-
-## 기술 스택 (실습 및 적용 목표)
-
-Python, PyTorch, Hugging Face, Qwen, RAG, LoRA, FastAPI, JavaScript, RunPod
-
-## 기록 원칙
-
-강의 제공 코드와 직접 작성·수정한 코드를 구분합니다. 재배포 허가가 확인되지 않은 강의 자료, API 키, 개인 정보, 모델 가중치는 공개하지 않습니다. 성능 수치 및 스크린샷은 실제 실행한 결과만 기록합니다.
+01~05 결과는 저장된 실습 기록입니다. 05 CSV는 마지막으로 실행한 노트북의 표시 표에서 옮겼으며, 화면에서 축약된 오류 문자열은 그대로 남겼습니다. 이번 정리에서는 FinanceRAG CPU 테스트 5건을 다시 실행했습니다. GPU 모델 재추론 및 오류 수정 전후 재측정은 수행하지 않았습니다.

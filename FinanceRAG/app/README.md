@@ -1,3 +1,3 @@
-# Backend
+# 재무 분석 API
 
-기존 강의 FastAPI, Agent, RAG 및 도구 소스를 통합할 위치입니다. 현재 원본 소스 미확보 상태이며 구현 완료를 의미하지 않습니다. 기존 import 및 디렉터리 구조를 유지하여 추가합니다.
+`service.py`에서 문서를 검색하고, `app.py`에서 요청을 검증합니다. CPU와 강의 GPU의 실행 절차는 [FinanceRAG 안내](../README.md)에 있습니다.
