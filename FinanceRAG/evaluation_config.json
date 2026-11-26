@@ -1,0 +1,20 @@
+{
+  "base_url": "http://127.0.0.1:8000",
+  "endpoint": "/agent",
+  "query_field": "query",
+  "tool_field": "tool_name",
+  "success_field": "success",
+  "timeout": 120,
+  "test_cases": [
+    {
+      "test_type": "calculation",
+      "query": "10000원의 15%를 계산해줘",
+      "expected_tool": "calculator"
+    },
+    {
+      "test_type": "rag",
+      "query": "삼성전자 재무 문서의 매출액을 근거와 함께 알려줘",
+      "expected_tool": "rag"
+    }
+  ]
+}
